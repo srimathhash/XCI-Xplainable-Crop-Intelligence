@@ -25,7 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://xci-xplainable-crop-intelligence-9ps8.vercel.app",
+        "https://xci-xplainable-crop-intelligence-w3ot-8rb9kd6u2.vercel.app",
         "http://localhost:5174",
         "http://localhost:5175",
         "http://localhost:3000",
