@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 from jose import jwt
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, BackgroundTasks
 from fastapi.responses import JSONResponse
 from schemas.user import UserRegister, UserLogin, UserResponse, TokenResponse, OtpVerify, GoogleAuthRequest, ResendOtp
 from services.auth_service import hash_password, verify_password, create_access_token, get_current_user, oauth2_scheme, decode_token
@@ -10,7 +10,7 @@ from services.email_service import send_otp_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-async def _generate_and_send_otp(db, user_email: str, user_id):
+async def _generate_and_send_otp(db, user_email: str, user_id, background_tasks: BackgroundTasks):
     now = datetime.utcnow()
     user = await db["users"].find_one({"_id": user_id})
     last_requested = user.get("otp_last_requested")
@@ -29,10 +29,10 @@ async def _generate_and_send_otp(db, user_email: str, user_id):
             "otp_last_requested": now
         }}
     )
-    send_otp_email(user_email, otp_code)
+    background_tasks.add_task(send_otp_email, user_email, otp_code)
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-async def register(data: UserRegister):
+async def register(data: UserRegister, background_tasks: BackgroundTasks):
     db = get_db()
     existing = await db["users"].find_one({"email": data.email})
     if existing:
@@ -53,7 +53,7 @@ async def register(data: UserRegister):
     result = await db["users"].insert_one(user_doc)
     user_id = str(result.inserted_id)
 
-    await _generate_and_send_otp(db, data.email, result.inserted_id)
+    await _generate_and_send_otp(db, data.email, result.inserted_id, background_tasks)
 
     token = create_access_token({"sub": data.email, "user_id": user_id, "role": data.role.value})
     return TokenResponse(
@@ -115,7 +115,7 @@ async def verify_otp(data: OtpVerify):
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(data: UserLogin):
+async def login(data: UserLogin, background_tasks: BackgroundTasks):
     db = get_db()
     user = await db["users"].find_one({"email": data.email})
     
@@ -133,7 +133,7 @@ async def login(data: UserLogin):
         
     if not user.get("is_verified"):
         # User not verified yet, send OTP
-        await _generate_and_send_otp(db, data.email, user["_id"])
+        await _generate_and_send_otp(db, data.email, user["_id"], background_tasks)
         return JSONResponse(
             status_code=status.HTTP_403_FORBIDDEN,
             content={"detail": "Please verify your email with OTP first"}
@@ -155,13 +155,13 @@ async def login(data: UserLogin):
 
 
 @router.post("/resend-otp")
-async def resend_otp(data: ResendOtp):
+async def resend_otp(data: ResendOtp, background_tasks: BackgroundTasks):
     db = get_db()
     user = await db["users"].find_one({"email": data.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
         
-    await _generate_and_send_otp(db, data.email, user["_id"])
+    await _generate_and_send_otp(db, data.email, user["_id"], background_tasks)
     return {"message": "OTP sent successfully"}
 
 
