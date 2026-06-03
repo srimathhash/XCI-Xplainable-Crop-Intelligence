@@ -7,6 +7,7 @@ from schemas.user import UserRegister, UserLogin, UserResponse, TokenResponse, O
 from services.auth_service import hash_password, verify_password, create_access_token, get_current_user, oauth2_scheme, decode_token
 from database.connection import get_db
 from services.email_service import send_otp_email
+from core.config import GOOGLE_CLIENT_ID
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -183,7 +184,17 @@ async def logout(current_user: dict = Depends(get_current_user), token: str = De
 async def google_auth(data: GoogleAuthRequest):
     try:
         # For simplicity and robust local dev we decode without signature verification
-        idinfo = jwt.decode(data.token, "", algorithms=["RS256"], options={"verify_signature": False})
+        # Verify the token with audience check
+        idinfo = jwt.decode(
+            data.token, 
+            "", 
+            algorithms=["RS256"], 
+            options={
+                "verify_signature": False,  # Kept false for robust local dev as per original, but we verify audience
+                "verify_aud": True
+            },
+            audience=GOOGLE_CLIENT_ID
+        )
         
         email = idinfo.get("email")
         name = idinfo.get("name", "Google User")
