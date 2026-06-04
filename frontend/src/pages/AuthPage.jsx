@@ -113,7 +113,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                 )}
 
                 {/* Role Selector - Ultra-compact premium design */}
-                <div className="w-full mb-16 flex justify-center">
+                <div className="w-full mb-12 flex justify-center">
                     <div className="w-[200px] flex gap-4 p-[2px] rounded-[10px]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
                         {['Farmer', 'Researcher'].map(r => (
                             <button
@@ -132,7 +132,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                     </div>
                 </div>
 
-                <div className="w-full mb-20 flex justify-center scale-[1.05]">
+                <div className="w-full mb-12 flex justify-center scale-[1.05]">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={() => setError('Google sign in failed')}
@@ -144,7 +144,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                     />
                 </div>
 
-                <div className="w-full relative mb-24 flex items-center">
+                <div className="w-full relative mb-12 flex items-center">
                     <div className="flex-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.2)' }}></div>
                     <span className="px-16 text-[12px] font-medium tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
                         OR
@@ -152,7 +152,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                     <div className="flex-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.2)' }}></div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="w-full space-y-16">
+                <form onSubmit={handleSubmit} className="w-full space-y-12">
                     {!isLogin && (
                         <div className="w-full">
                             <input
