@@ -94,35 +94,35 @@ export default function TopNavbar() {
 
                         {/* Dropdown Card */}
                         {isProfileOpen && (
-                            <div className="absolute right-0 top-[120%] w-[220px] bg-white rounded-[16px] shadow-xl border border-gray-100 py-8 z-50 animate-fade-in flex flex-col">
+                            <div className="absolute right-0 top-[115%] w-[210px] bg-white/95 backdrop-blur-[12px] rounded-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-white z-50 animate-fade-in flex flex-col p-8">
                                 {user ? (
                                     <>
-                                        <div className="px-16 py-12 border-b border-gray-50 flex items-center gap-12">
-                                            <div className="w-[40px] h-[40px] bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold shrink-0">
-                                                {user.name ? user.name.charAt(0).toUpperCase() : <User size={20} />}
+                                        <div className="flex items-center gap-10 px-8 py-10 mb-6 bg-[#f8fafc]/50 rounded-[12px]">
+                                            <div className="w-[36px] h-[36px] bg-[#dcfce7] rounded-full flex items-center justify-center text-[#15803d] font-bold text-[14px] shrink-0 border border-[#bbf7d0]">
+                                                {user.name ? user.name.charAt(0).toUpperCase() : <User size={18} />}
                                             </div>
                                             <div className="flex flex-col min-w-0">
-                                                <span className="text-[14px] font-bold text-appDarkText truncate">{user.name || 'User'}</span>
-                                                <span className="text-[12px] font-medium text-appSecondaryText truncate">{t('profile.role') || 'Role'}: {t('auth.researcher') || 'Researcher'}</span>
+                                                <span className="text-[13.5px] font-bold text-appDarkText truncate leading-tight">{user.name || 'User'}</span>
+                                                <span className="text-[11px] font-medium text-appSecondaryText truncate mt-1 leading-tight">{user.role || 'Farmer'}</span>
                                             </div>
                                         </div>
-                                        <div className="p-8">
+                                        <div className="px-2">
                                             <button
                                                 onClick={handleLogout}
-                                                className="w-full flex items-center gap-8 px-12 py-10 text-[14px] font-semibold text-red-600 hover:bg-red-50 rounded-[8px] transition-colors"
+                                                className="w-full flex items-center gap-8 px-10 py-8 text-[13px] font-bold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-[10px] transition-all duration-200"
                                             >
-                                                <LogOut size={16} /> Logout
+                                                <LogOut size={14} /> {t('nav.logout') || 'Logout'}
                                             </button>
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="p-8">
+                                    <div className="px-2">
                                         <NavLink
                                             to="/login"
                                             onClick={() => setIsProfileOpen(false)}
-                                            className="w-full flex items-center gap-8 px-12 py-10 text-[14px] font-semibold text-primary-700 hover:bg-primary-50 rounded-[8px] transition-colors"
+                                            className="w-full flex items-center gap-8 px-10 py-8 text-[13px] font-bold text-primary-700 hover:bg-primary-50 rounded-[10px] transition-colors"
                                         >
-                                            <LogIn size={16} /> Login
+                                            <LogIn size={14} /> {t('auth.login') || 'Login'}
                                         </NavLink>
                                     </div>
                                 )}

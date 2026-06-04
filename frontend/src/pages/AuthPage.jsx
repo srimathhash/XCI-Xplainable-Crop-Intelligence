@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
 import { loginUser, registerUser, googleAuth } from '../services/api'
@@ -112,35 +112,35 @@ export default function AuthPage({ isLoginRoute = true }) {
                     </div>
                 )}
 
-                {!isLogin && (
-                    <div className="w-full mb-24">
-                        <div className="flex gap-16 p-4 rounded-[14px]" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-                            {['Farmer', 'Researcher'].map(r => (
-                                <button
-                                    key={r} type="button"
-                                    onClick={() => setFormData({ ...formData, role: r })}
-                                    className="flex-1 py-10 text-[14px] font-medium rounded-xl transition-all duration-300"
-                                    style={{
-                                        background: formData.role === r ? 'rgba(255,255,255,0.25)' : 'transparent',
-                                        color: 'white',
-                                        boxShadow: formData.role === r ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
-                                    }}
-                                >
-                                    {r}
-                                </button>
-                            ))}
-                        </div>
+                {/* Role Selector - Ultra-compact premium design */}
+                <div className="w-full mb-16 flex justify-center">
+                    <div className="w-[200px] flex gap-4 p-[2px] rounded-[10px]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        {['Farmer', 'Researcher'].map(r => (
+                            <button
+                                key={r} type="button"
+                                onClick={() => setFormData({ ...formData, role: r })}
+                                className="flex-1 py-[3px] text-[11px] font-bold rounded-[8px] transition-all duration-300"
+                                style={{
+                                    background: formData.role === r ? 'rgba(255,255,255,0.15)' : 'transparent',
+                                    color: formData.role === r ? 'white' : 'rgba(255,255,255,0.4)',
+                                    boxShadow: formData.role === r ? '0 1px 4px rgba(0,0,0,0.1)' : 'none'
+                                }}
+                            >
+                                {r}
+                            </button>
+                        ))}
                     </div>
-                )}
+                </div>
 
-                <div className="w-full mb-24 rounded-[12px] overflow-hidden">
+                <div className="w-full mb-20 flex justify-center scale-[1.05]">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={() => setError('Google sign in failed')}
-                        theme="filled_black"
+                        theme="outline"
+                        shape="pill"
                         size="large"
                         text={isLogin ? 'signin_with' : 'signup_with'}
-                        width="340"
+                        width="300"
                     />
                 </div>
 
