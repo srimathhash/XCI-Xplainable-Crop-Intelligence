@@ -89,8 +89,8 @@ export default function AuthPage({ isLoginRoute = true }) {
                 className="flex flex-col items-center text-center mx-auto"
                 style={{
                     width: '100%',
-                    maxWidth: '420px', // slightly wider than 380 for better inner padding on desktop
-                    padding: '40px',
+                    maxWidth: '400px',
+                    padding: '24px',
                     borderRadius: '24px',
                     background: 'rgba(255,255,255,0.12)',
                     backdropFilter: 'blur(18px)',
@@ -98,11 +98,11 @@ export default function AuthPage({ isLoginRoute = true }) {
                     boxShadow: '0 20px 60px rgba(0,0,0,0.2)'
                 }}
             >
-                <div style={{ fontSize: '24px', fontWeight: 700, color: '#ffffff', marginBottom: '24px', letterSpacing: '1px' }}>
+                <div style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff', marginBottom: '12px', letterSpacing: '1px' }}>
                     🌱 XCI
                 </div>
 
-                <h2 style={{ color: 'white', marginBottom: '32px', fontSize: '24px', fontWeight: 600 }}>
+                <h2 style={{ color: 'white', marginBottom: '16px', fontSize: '22px', fontWeight: 600 }}>
                     {isLogin ? (t('auth.login') || 'Login') : (t('auth.signup') || 'Sign Up')}
                 </h2>
 
@@ -113,13 +113,13 @@ export default function AuthPage({ isLoginRoute = true }) {
                 )}
 
                 {/* Role Selector - Ultra-compact premium design */}
-                <div className="w-full mb-12 flex justify-center">
-                    <div className="w-[200px] flex gap-4 p-[2px] rounded-[10px]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="w-full mb-6 flex justify-center">
+                    <div className="w-[180px] flex gap-4 p-[2px] rounded-[10px]" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
                         {['Farmer', 'Researcher'].map(r => (
                             <button
                                 key={r} type="button"
                                 onClick={() => setFormData({ ...formData, role: r })}
-                                className="flex-1 py-[3px] text-[11px] font-bold rounded-[8px] transition-all duration-300"
+                                className="flex-1 py-[2px] text-[10px] font-bold rounded-[8px] transition-all duration-300"
                                 style={{
                                     background: formData.role === r ? 'rgba(255,255,255,0.15)' : 'transparent',
                                     color: formData.role === r ? 'white' : 'rgba(255,255,255,0.4)',
@@ -132,7 +132,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                     </div>
                 </div>
 
-                <div className="w-full mb-12 flex justify-center scale-[1.05]">
+                <div className="w-full mb-8 flex justify-center scale-[1.05]">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={() => setError('Google sign in failed')}
@@ -144,15 +144,15 @@ export default function AuthPage({ isLoginRoute = true }) {
                     />
                 </div>
 
-                <div className="w-full relative mb-12 flex items-center">
+                <div className="w-full relative mb-8 flex items-center">
                     <div className="flex-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.2)' }}></div>
-                    <span className="px-16 text-[12px] font-medium tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    <span className="px-16 text-[11px] font-medium tracking-widest" style={{ color: 'rgba(255,255,255,0.6)' }}>
                         OR
                     </span>
                     <div className="flex-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.2)' }}></div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="w-full space-y-12">
+                <form onSubmit={handleSubmit} className="w-full space-y-6">
                     {!isLogin && (
                         <div className="w-full">
                             <input
@@ -218,13 +218,13 @@ export default function AuthPage({ isLoginRoute = true }) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full mt-8 transition-transform transform hover:-translate-y-[2px]"
+                        className="w-full mt-4 transition-transform transform hover:-translate-y-[2px]"
                         style={{
-                            padding: '14px 24px',
+                            padding: '12px 24px',
                             borderRadius: '12px',
                             background: 'rgba(255,255,255,0.25)',
                             color: 'white',
-                            fontSize: '16px',
+                            fontSize: '15px',
                             fontWeight: 600,
                             border: '1px solid rgba(255,255,255,0.4)',
                             boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
@@ -234,7 +234,7 @@ export default function AuthPage({ isLoginRoute = true }) {
                     </button>
                 </form>
 
-                <div className="mt-24 text-center text-[14px]">
+                <div className="mt-12 text-center text-[13px]">
                     <span style={{ color: 'rgba(255,255,255,0.7)' }}>
                         {isLogin ? "Don't have an account? " : "Already have an account? "}
                     </span>

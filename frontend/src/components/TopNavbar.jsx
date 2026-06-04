@@ -94,10 +94,10 @@ export default function TopNavbar() {
 
                         {/* Dropdown Card */}
                         {isProfileOpen && (
-                            <div className="absolute right-0 top-[115%] w-[210px] bg-white/95 backdrop-blur-[12px] rounded-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-white z-50 animate-fade-in flex flex-col p-8">
+                            <div className="absolute right-0 top-[115%] w-[210px] bg-white/95 backdrop-blur-[12px] rounded-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-white z-50 animate-fade-in flex flex-col p-6">
                                 {user ? (
                                     <>
-                                        <div className="flex items-center gap-10 px-8 py-10 mb-6 bg-[#f8fafc]/50 rounded-[12px]">
+                                        <div className="flex items-center gap-10 px-8 py-8 mb-4 bg-[#f8fafc]/50 rounded-[12px]">
                                             <div className="w-[36px] h-[36px] bg-[#dcfce7] rounded-full flex items-center justify-center text-[#15803d] font-bold text-[14px] shrink-0 border border-[#bbf7d0]">
                                                 {user.name ? user.name.charAt(0).toUpperCase() : <User size={18} />}
                                             </div>
@@ -109,7 +109,7 @@ export default function TopNavbar() {
                                         <div className="px-2">
                                             <button
                                                 onClick={handleLogout}
-                                                className="w-full flex items-center gap-8 px-10 py-8 text-[13px] font-bold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-[10px] transition-all duration-200"
+                                                className="w-full flex items-center gap-8 px-10 py-6 text-[13px] font-bold text-red-500 hover:bg-red-50 hover:text-red-600 rounded-[10px] transition-all duration-200"
                                             >
                                                 <LogOut size={14} /> {t('nav.logout') || 'Logout'}
                                             </button>
@@ -120,7 +120,7 @@ export default function TopNavbar() {
                                         <NavLink
                                             to="/login"
                                             onClick={() => setIsProfileOpen(false)}
-                                            className="w-full flex items-center gap-8 px-10 py-8 text-[13px] font-bold text-primary-700 hover:bg-primary-50 rounded-[10px] transition-colors"
+                                            className="w-full flex items-center gap-8 px-10 py-6 text-[13px] font-bold text-primary-700 hover:bg-primary-50 rounded-[10px] transition-colors"
                                         >
                                             <LogIn size={14} /> {t('auth.login') || 'Login'}
                                         </NavLink>
